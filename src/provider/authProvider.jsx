@@ -4,7 +4,7 @@ import app from '../firebase/firebase.config';
 export const AuthContext = createContext(null)
 const Auth = getAuth(app)
 const AuthProvider = ({children}) => {
-    const user = {displayName: "Afsar Khan"}
+    const user = null
     const AuthInfo = {
         user
     }
