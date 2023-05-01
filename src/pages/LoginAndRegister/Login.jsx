@@ -1,13 +1,40 @@
 import React from "react";
+import { useContext } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/authProvider";
 
 const Login = () => {
-   
+  const navigate = useNavigate();
+  
+// ===========SET TARGETED LOCATION===========
+  const location = useLocation()
+  console.log(location)
+  const from = location?.state?.from.pathname || "/category/0"
+
+   const {loginUser} = useContext(AuthContext)
+   const SignInHandler = event => {
+    event.preventDefault()
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    loginUser(email, password)
+    .then(result => {
+      const user = result.user
+
+      // ===========SET TARGETED LOCATION===========
+      navigate(from)
+
+    })
+    .catch(error => {
+      console.log(error)
+    })
+   }
   return (
     <Container className="w-50">
         <h3>Please Login</h3>
-      <Form>
+      <Form onSubmit={SignInHandler}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control name="email" type="email" placeholder="Enter email" />

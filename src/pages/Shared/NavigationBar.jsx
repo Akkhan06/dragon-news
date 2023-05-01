@@ -8,8 +8,17 @@ import { AuthContext } from '../../provider/authProvider';
 ;
 
 const NavigationBar = () => {
-    const {user} = useContext(AuthContext)
+    const {user, logOut} = useContext(AuthContext)
     console.log(user)
+    const signout = () => {
+        logOut()
+        .then(() => {
+            alert('Log Out success')
+        })
+        .catch(error => {
+
+        })
+    }
     return (
         <Container>
               <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -28,7 +37,7 @@ const NavigationBar = () => {
                                 {<FaUserCircle style={{fontSize: "2rem"}}></FaUserCircle>}
                             </Nav.Link>}
                             
-                                {!user ? <Link to="/login"><Button variant="secondary">Login</Button></Link> : <Button variant="secondary">Log Out</Button>}
+                                {!user ? <Link to="/login"><Button variant="secondary">Login</Button></Link> : <Button onClick={signout} variant="secondary">Log Out</Button>}
                             
                         </Nav>
 
